@@ -56,7 +56,7 @@ figure('Color','w','Position',[120 120 700 340]); hold on; axis equal
 rectangle('Position',[0 0 Lx_nm Ly_nm], ...
           'EdgeColor',[.3 .3 .3],'LineWidth',1.2);
 
-% 颜色映射（仍按水深米值）
+% 颜色映射（按水深米值）
 cmap = parula(height(T));
 
 % 绘制中心测线
@@ -65,10 +65,6 @@ for k = 1:height(T)
     plot([xc xc],[0 Ly_nm],'Color',[0 0 0], ...  % 纯黑线
          'LineWidth',0.9,'LineStyle','--');
     % 可改 'LineStyle','--' 获得虚线效果
-    % 编号保持在中下方
-    text(xc, Ly_nm*0.05, sprintf('#%d', T.line_no(k)), ...
-        'HorizontalAlignment','center','FontSize',8, ...
-        'Color',[0 0 0]);  % 与线一致
 end
 
 % 条带矩形patch
@@ -98,6 +94,10 @@ caxis([min(T.depth_m_) max(T.depth_m_)])  % 深度范围
 hcb = colorbar('eastoutside');     % 右侧色条
 hcb.Label.String = '中心水深 / 米'; % 色条标题
 % hcb.TickLabelInterpreter = 'latex';% (可选) LaTeX 格式
+% 获取 colorbar 当前刻度（默认递增）
+ticks = hcb.Ticks;
+% 手动设定新的 label（反向排序）
+hcb.TickLabels = arrayfun(@(x) sprintf('%.0f', x), flip(ticks), 'UniformOutput', false);
 hcb.FontSize = 9;
 
 xlabel('东西向距离 / 海里');
@@ -105,5 +105,5 @@ ylabel('南北向距离 / 海里');
 % title('多波束测深条带及重叠区示意（单位：海里）');
 title('多波束测深布线示意图');
 xlim([0 Lx_nm]); ylim([0 Ly_nm]);
-grid on; box on
+grid off; box on
 % exportgraphics(gcf,'strip_overlap_nmi.pdf','ContentType','vector');
