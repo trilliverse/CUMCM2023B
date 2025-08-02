@@ -1,3 +1,12 @@
 *.docx
-*.tmp
 *.pdf
+
+# Ignore temporary files
+*.tmp
+*.asv
+
+# 保留不带时间戳的 emf 文件
+!*.emf
+# 忽略带时间戳格式的 .emf 文件，例如 xxx20250802T142125.emf
+*/*[0-9]T[0-9]*.emf
+*[0-9]T[0-9]*.emf
