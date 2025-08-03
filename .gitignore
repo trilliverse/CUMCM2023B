@@ -4,6 +4,7 @@
 # Ignore temporary files
 *.tmp
 *.asv
+__pycache__/
 
 # 保留不带时间戳的 emf 文件
 !*.emf
