@@ -1,5 +1,5 @@
 %% ==== 读取 CSV ====
-T = readtable('sobol_indices.csv','ReadRowNames',true);
+T = readtable('stats\sobol_indices.csv','ReadRowNames',true);
 
 % labels = T.Properties.RowNames;    % {'θ','α','η','D₀'}
 labels = {'\theta';'\alpha'; '\eta';'D_{0}'};

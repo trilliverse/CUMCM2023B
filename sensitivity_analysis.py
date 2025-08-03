@@ -92,8 +92,10 @@ sobol_df = pd.DataFrame(
     },
     index=index,
 ).round(4)
-sobol_df.to_csv("sobol_indices.csv")
+output_path = "stats/sobol_indices.csv"
+sobol_df.to_csv(output_path)
 print("Sobol 指数:\n", sobol_df)
+print(f"Sobol 指数已保存到 {output_path}")
 
 
 # # ---- 5. 可视化 ----
