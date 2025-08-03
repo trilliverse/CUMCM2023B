@@ -1,44 +1,44 @@
-% === 1. 载入布线结果 ===
-T   = readtable('result3_deep_to_shallow.xlsx');  % line_no, x_center, depth
-Lx  = 4 * 1852;      % 东西向 4 nmi
-Ly  = 2 * 1852;      % 南北向 2 nmi
+% % === 1. 载入布线结果 ===
+% T   = readtable('result3_deep_to_shallow.xlsx');  % line_no, x_center, depth
+% Lx  = 4 * 1852;      % 东西向 4 nmi
+% Ly  = 2 * 1852;      % 南北向 2 nmi
+% 
+% % === 2. 基础绘图 ===
+% 
+% figure('Color','w','Position',[100 100 680 320]); hold on; axis equal
+% box on; grid on
+% % 绘矩形海域
+% rectangle('Position',[0 0 Lx Ly],...
+%           'EdgeColor',[0.2 0.2 0.2],'LineWidth',1.2);
+% 
+% % 颜色映射到水深（浅→深）
+% cmap = parula(height(T));
+% for k = 1:height(T)
+%     xk = T.x_center_m_(k);
+%     plot([xk xk],[0 Ly],'-','Color',cmap(k,:),...
+%          'LineWidth',1.5);
+%     % 在条带中心加小圆 & 注记
+%     plot(xk,Ly/2,'ko','MarkerSize',4,'MarkerFaceColor',cmap(k,:));
+%     text(xk,Ly*0.52,sprintf('#%d',T.line_no(k)),...
+%         'HorizontalAlignment','center','FontSize',8);
+% end
+% 
+% % === 3. 细节美化 ===
+% colormap(cmap); cb=colorbar;
+% cb.Label.String='中心水深 / m';
+% xlabel('东西向坐标 x / m');
+% ylabel('南北向坐标 y / m');
+% % title('多波束测深——由深往潜布线示意图');
+% set(gca,'FontName','Times New Roman','FontSize',10);
+% exportgraphics(gcf,'figure_lines_layout.pdf','ContentType','vector');
 
-% === 2. 基础绘图 ===
-
-figure('Color','w','Position',[100 100 680 320]); hold on; axis equal
-box on; grid on
-% 绘矩形海域
-rectangle('Position',[0 0 Lx Ly],...
-          'EdgeColor',[0.2 0.2 0.2],'LineWidth',1.2);
-
-% 颜色映射到水深（浅→深）
-cmap = parula(height(T));
-for k = 1:height(T)
-    xk = T.x_center_m_(k);
-    plot([xk xk],[0 Ly],'-','Color',cmap(k,:),...
-         'LineWidth',1.5);
-    % 在条带中心加小圆 & 注记
-    plot(xk,Ly/2,'ko','MarkerSize',4,'MarkerFaceColor',cmap(k,:));
-    text(xk,Ly*0.52,sprintf('#%d',T.line_no(k)),...
-        'HorizontalAlignment','center','FontSize',8);
-end
-
-% === 3. 细节美化 ===
-colormap(cmap); cb=colorbar;
-cb.Label.String='中心水深 / m';
-xlabel('东西向坐标 x / m');
-ylabel('南北向坐标 y / m');
-% title('多波束测深——由深往潜布线示意图');
-set(gca,'FontName','Times New Roman','FontSize',10);
-exportgraphics(gcf,'figure_lines_layout.pdf','ContentType','vector');
-
-%% 以这个为准
+%%
 % === 0. 准备 ===
 nm  = 1852;                    % 1 海里 = 1852 m
 Lx  = 4 * nm;   Ly = 2 * nm;   % 海域原米制尺寸
 
-T  = readtable('result3_lines_info.xlsx');   % 含 x_left(m)、x_right(m)
-Ov = readtable('result3_overlap_info.xlsx'); % 含重叠区边界(m)
+T  = readtable('stats\result3_lines_info.xlsx');   % 含 x_left(m)、x_right(m)
+Ov = readtable('stats\result3_overlap_info.xlsx'); % 含重叠区边界(m)
 
 % === 1. 米 → 海里坐标换算 ===
 T.x_left_nm   = T.x_left_m_   / nm;
